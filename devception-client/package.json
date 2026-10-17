@@ -7,6 +7,7 @@
     "check:sitemap": "node scripts/check-sitemap.mjs",
     "prebuild": "node scripts/check-sitemap.mjs",
     "build": "next build",
+    "vercel-build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
