@@ -1,0 +1,55 @@
+services:
+  - type: web
+    name: devception-preview-backend
+    runtime: docker
+    region: oregon
+    plan: free
+    branch: feature/landing-revamp
+
+    # Monorepo configuration: backend code lives in devception-server
+    rootDir: devception-server
+    dockerfilePath: ./Dockerfile
+
+    healthCheckPath: /health
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      - key: PORT
+        value: 10000
+
+      # Database: set to MongoDB Atlas in Render dashboard (Railway internal URLs are not reachable)
+      - key: MONGODB_URI
+        sync: false
+
+      # Auth secret matching Vercel preview deployment
+      - key: NEXTAUTH_SECRET
+        value: devception-secret-32-chars-long-development-key-12345
+
+      # Preview CORS allowed origins
+      - key: CLIENT_ORIGIN
+        value: https://devception-preview.vercel.app
+
+      - key: CLIENT_ORIGINS
+        value: https://devception-preview.vercel.app,http://localhost:3000
+
+      - key: ALLOW_VERCEL_PREVIEWS
+        value: "true"
+
+      - key: GAME_DURATION_MS
+        value: "900000"
+      - key: MEETING_DISCUSSION_MS
+        value: "60000"
+      - key: MEETING_VOTING_MS
+        value: "30000"
+      - key: MAX_PLAYERS
+        value: "8"
+      - key: MIN_PLAYERS
+        value: "4"
+      - key: IMPOSTER_BUG_COOLDOWN_MS
+        value: "45000"
+      - key: IMPOSTER_BLUR_COOLDOWN_MS
+        value: "60000"
+      - key: IMPOSTER_HINT_COOLDOWN_MS
+        value: "30000"
